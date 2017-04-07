@@ -1,0 +1,61 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+group = 'com.naivor'
+version = '1.0.0'
+
+def siteUrl = 'https://github.com/naivor/LoadMoreHelper'      // 项目的主页
+def gitUrl = 'https://github.com/naivor/LoadMoreHelper.git'   // Git仓库的url
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name 'LoadMoreHelper'
+            description 'A Helper for ListView and RecyclerView when there  need a loading next page solution'
+            url siteUrl
+            inceptionYear '2017'
+
+            packaging 'aar'
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    distribution 'repo'
+                }
+            }
+            scm {
+                connection gitUrl
+                url siteUrl
+
+            }
+            developers {
+                developer {
+                    id 'naivor'     //填写的一些基本信息
+                    name 'naivor'
+                    email 'naivortang@gmail.com'
+                }
+            }
+        }
+    }
+}
+
+
+bintray {
+    user = project.hasProperty('BINTRAY_USER') ? project.BINTRAY_USER : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('BINTRAY_KEY') ? project.BINTRAY_KEY : System.getenv('BINTRAY_KEY')
+
+    configurations = ['archives']
+    pkg {
+        repo = 'maven'
+        name = 'loadmore-helper'
+        userOrg = user
+        licenses = ['Apache-2.0']
+        vcsUrl = gitUrl
+        publish = true
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.4'
+}

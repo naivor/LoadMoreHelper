@@ -31,3 +31,7 @@ dependencies {
 
     compile 'com.naivor:adapter:1.0.7'
 }
+
+
+
+apply from: 'bintrayUpload.gradle'
