@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LoadMore</string>
+
+    <string name="loading_message">加载中...</string>
+    <string name="no_more_data">- 亲,没有更多数据啦 -</string>
+    <string name="loading_error">出错了，点击重试</string>
+</resources>

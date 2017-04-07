@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <declare-styleable name="LoadMoreView">
+        <attr name="errorHint" format="string|reference" />
+        <attr name="loadingHint" format="string|reference" />
+        <attr name="noMoreDataHint" format="string|reference" />
+        <attr name="loadDrawable" format="reference" />
+    </declare-styleable>
+</resources>
