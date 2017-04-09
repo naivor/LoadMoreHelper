@@ -75,7 +75,7 @@ helper.setLoadMode(loadMode);  // MODE_AUTO, MODE_CLICK;  //自动加载，点�
 5.效果：
 
 
-![img](https://github.com/naivor/LoadMoreHelper/blob/master/docs/loadmore.gif)
+![img](https://github.com/naivor/LoadMoreHelper/blob/master/docs/lodmore.gif)
 
 ![img](https://github.com/naivor/LoadMoreHelper/blob/master/docs/loadmore_clickmode.gif)
 
