@@ -2,7 +2,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 group = 'com.naivor'
-version = '1.0.1'
+version = '1.0.2'
 
 def siteUrl = 'https://github.com/naivor/LoadMoreHelper'      // 项目的主页
 def gitUrl = 'https://github.com/naivor/LoadMoreHelper.git'   // Git仓库的url

@@ -14,10 +14,4 @@ public  interface OnLoadMoreListener {
      */
     void onLoadMore(int next);
 
-    /**
-     * 重新加载，加载出错后使用
-     *
-     * @param index
-     */
-    void onReload(int index);
 }

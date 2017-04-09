@@ -33,8 +33,4 @@ public interface LoadMoreOperator {
      */
     void noMoreData();
 
-    /**
-     * 加载更多的监听器
-     */
-
 }

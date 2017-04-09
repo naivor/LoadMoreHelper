@@ -56,11 +56,6 @@ public class ListActivity extends AppCompatActivity {
             public void onLoadMore(int next) {
                 loadData(next);
             }
-
-            @Override
-            public void onReload(int index) {
-                loadData(index);
-            }
         });
 
         loadData(0);
@@ -75,7 +70,7 @@ public class ListActivity extends AppCompatActivity {
 
                 SimpleItem item = new SimpleItem();
                 item.setContent("我是第 " + next + " 页的 Item");
-                for (int i = 0; i < 5; i++) {
+                for (int i = 0; i < 10; i++) {
                     datas.add(item);
                 }
 

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -16,6 +15,7 @@ import com.naivor.adapter.HeaderFooter;
 import static com.naivor.loadmore.LoadMoreState.COMPLETE;
 import static com.naivor.loadmore.LoadMoreState.ERROR;
 import static com.naivor.loadmore.LoadMoreState.LOADING;
+import static com.naivor.loadmore.LoadMoreState.NEXTHINT;
 import static com.naivor.loadmore.LoadMoreState.NOMOREDATA;
 import static com.naivor.loadmore.LoadMoreState.ORIGIN;
 
@@ -42,6 +42,8 @@ public class LoadMoreHelper implements LoadMoreOperator {
     private OnLoadMoreListener onLoadMoreListener;
 
     private int state;
+
+    private LoadMode loadMode = LoadMode.MODE_AUTO;
 
     public LoadMoreHelper(Context context) {
 
@@ -97,8 +99,6 @@ public class LoadMoreHelper implements LoadMoreOperator {
 
                 @Override
                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-
                     execLoadMore(view, getScrollY(view));
                 }
 
@@ -141,9 +141,20 @@ public class LoadMoreHelper implements LoadMoreOperator {
         moreView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (state == ERROR && onLoadMoreListener != null) {
+                if (onLoadMoreListener != null) {
+
+                    int index;
+
+                    if (state == ERROR) {
+                        index = getIndex();
+                    } else if (loadMode == LoadMode.MODE_CLICK) {
+                        index = getNext();
+                    } else {
+                        return;
+                    }
+
                     changeState(LOADING);
-                    onLoadMoreListener.onReload(getIndex());
+                    onLoadMoreListener.onLoadMore(index);
                 }
             }
         });
@@ -163,13 +174,17 @@ public class LoadMoreHelper implements LoadMoreOperator {
             if (state == NOMOREDATA) {
                 changeState(NOMOREDATA);
 
-                Log.i(TAG, "没有下一页了");
             } else {
-                Log.i(TAG, "加载下一页");
-                changeState(LOADING);
-                if (onLoadMoreListener != null) {
-                    onLoadMoreListener.onLoadMore(getNext());
+
+                if (loadMode == LoadMode.MODE_AUTO) {
+                    changeState(LOADING);
+                    if (onLoadMoreListener != null) {
+                        onLoadMoreListener.onLoadMore(getNext());
+                    }
+                } else {
+                    changeState(NEXTHINT);
                 }
+
             }
 
         }
@@ -200,6 +215,9 @@ public class LoadMoreHelper implements LoadMoreOperator {
             case ORIGIN:
                 moreView.reset();
                 index = ORIGIN_INDEX;
+                break;
+            case NEXTHINT:
+                moreView.loadHint();
                 break;
             case LOADING:
                 moreView.loading();
@@ -348,6 +366,14 @@ public class LoadMoreHelper implements LoadMoreOperator {
         changeState(NOMOREDATA);
     }
 
+    public String getOriginHint() {
+        return moreView.getOriginHint();
+    }
+
+    public void setOriginHint(String originHint) {
+        moreView.setOriginHint(originHint);
+    }
+
     public String getErrorHint() {
         return moreView.getErrorHint();
     }
@@ -386,6 +412,16 @@ public class LoadMoreHelper implements LoadMoreOperator {
 
     public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
         this.onLoadMoreListener = onLoadMoreListener;
+    }
+
+
+
+    public LoadMode getLoadMode() {
+        return loadMode;
+    }
+
+    public void setLoadMode(LoadMode loadMode) {
+        this.loadMode = loadMode;
     }
 
 

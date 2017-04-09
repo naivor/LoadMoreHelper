@@ -21,6 +21,7 @@ import android.widget.TextView;
  */
 
 public class LoadMoreView extends FrameLayout implements LoadMoreOperator {
+    private String originHint;
 
     private String errorHint;
     private String loadingHint;
@@ -49,7 +50,9 @@ public class LoadMoreView extends FrameLayout implements LoadMoreOperator {
         int attrCount = a.getIndexCount();
         for (int i = 0; i < attrCount; i++) {
             int attr = a.getIndex(i);
-            if (attr == R.styleable.LoadMoreView_errorHint) {
+            if (attr == R.styleable.LoadMoreView_originHint) {
+                originHint = a.getString(attr);
+            } else if (attr == R.styleable.LoadMoreView_errorHint) {
                 errorHint = a.getString(attr);
 
             } else if (attr == R.styleable.LoadMoreView_loadingHint) {
@@ -85,6 +88,10 @@ public class LoadMoreView extends FrameLayout implements LoadMoreOperator {
         pbAnimate = (ProgressBar) view.findViewById(R.id.more_pb_anim);
 
         addView(view);
+
+        if (TextUtils.isEmpty(originHint)) {
+            originHint = context.getString(R.string.loading_origin);
+        }
 
         if (TextUtils.isEmpty(errorHint)) {
             errorHint = context.getString(R.string.loading_error);
@@ -136,6 +143,14 @@ public class LoadMoreView extends FrameLayout implements LoadMoreOperator {
         this.loadingDrawable = loadingDrawable;
     }
 
+    public String getOriginHint() {
+        return originHint;
+    }
+
+    public void setOriginHint(String originHint) {
+        this.originHint = originHint;
+    }
+
     /**
      * 获取屏幕像素密度相对于标准屏幕(160dpi)倍数
      *
@@ -180,10 +195,22 @@ public class LoadMoreView extends FrameLayout implements LoadMoreOperator {
     }
 
     /**
+     * 加载出错
+     */
+    public void loadHint() {
+
+        setVisibility(VISIBLE);
+        pbAnimate.setVisibility(GONE);
+        tvContent.setText(originHint);
+        setEnabled(true);
+    }
+
+    /**
      * 重置
      */
     @Override
     public void reset() {
+        tvContent.setText(originHint);
         setVisibility(GONE);
     }
 
@@ -193,6 +220,8 @@ public class LoadMoreView extends FrameLayout implements LoadMoreOperator {
     @Override
     public void loading() {
         setVisibility(VISIBLE);
+        pbAnimate.setIndeterminateDrawable(loadingDrawable);
+        pbAnimate.setProgressDrawable(loadingDrawable);
         pbAnimate.setVisibility(VISIBLE);
         tvContent.setText(loadingHint);
         setEnabled(false);

@@ -8,7 +8,11 @@ public class LoadMoreState {
     /**
      * 初始状态
      */
-    public static final int ORIGIN = 0;
+    public static final int ORIGIN = -1;
+    /**
+     * 初始状态
+     */
+    public static final int NEXTHINT = 0;
     /**
      * 加载中
      */

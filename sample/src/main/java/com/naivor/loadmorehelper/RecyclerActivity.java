@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.naivor.loadmore.LoadMode;
 import com.naivor.loadmore.LoadMoreHelper;
 import com.naivor.loadmore.OnLoadMoreListener;
 
@@ -54,16 +55,14 @@ public class RecyclerActivity extends AppCompatActivity {
 
         helper = new LoadMoreHelper(getApplicationContext());
         helper.target(rvContent);
+        helper.setLoadMode(LoadMode.MODE_CLICK);
+        helper.setLoadingDrawable(getResources().getDrawable(R.drawable.progress_dialog_new));
         helper.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(int next) {
                 loadData(next);
             }
 
-            @Override
-            public void onReload(int index) {
-                loadData(index);
-            }
         });
 
         loadData(0);

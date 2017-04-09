@@ -1,5 +1,6 @@
 package com.naivor.loadmorehelper;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +30,7 @@ public class RecySimpleActivity extends AppCompatActivity {
     private boolean isError;
 
 
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,15 +56,11 @@ public class RecySimpleActivity extends AppCompatActivity {
 
         helper = new LoadMoreHelper(getApplicationContext());
         helper.target(rvContent);
+        helper.setLoadingDrawable(getResources().getDrawable(R.drawable.progress_dialog_new));
         helper.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(int next) {
                 loadData(next);
-            }
-
-            @Override
-            public void onReload(int index) {
-                loadData(index);
             }
         });
 
