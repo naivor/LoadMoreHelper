@@ -26,16 +26,16 @@ helper.target(view);
 ```
 4.其他
 
-初始化索引起始值，有人喜欢从0开始，有人喜欢从1开始
+* 初始化索引起始值，有人喜欢从0开始，有人喜欢从1开始
 ```
 LoadMoreHelper.initIndex(num);
 ```
-设置加载模式
+* 设置加载模式
 ```
 helper.setLoadMode(loadMode);  // MODE_AUTO, MODE_CLICK;  //自动加载，点击加载，默认是自动加载
 ```
 
-设置loadmore的样式
+* 设置loadmore的样式
 ```
    helper.setOriginHint(originHint);
    helper.setErrorHint(errorHint);
@@ -44,7 +44,7 @@ helper.setLoadMode(loadMode);  // MODE_AUTO, MODE_CLICK;  //自动加载，点�
    helper.setLoadingDrawable(loadingDrawable);
 
 ```
-加载完成操作
+* 加载完成操作
 ```
  	/**
      * 加载完成
